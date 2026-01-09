@@ -21,8 +21,14 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir --upgrade pip && \
     pip install --no-cache-dir -r requirements.txt
 
-# Copia o resto do código
+# Copia o resto do código (incluindo .env se existir)
 COPY . .
+
+# Cria arquivo .env vazio se não foi copiado (evita erro do Dokploy)
+RUN if [ ! -f /app/.env ]; then \
+        echo "# Arquivo .env vazio - configurações estão no main.py" > /app/.env && \
+        echo "# Este arquivo existe apenas para evitar erro do Dokploy" >> /app/.env; \
+    fi
 
 # Cria diretório para logs (se necessário)
 RUN mkdir -p /app/logs
