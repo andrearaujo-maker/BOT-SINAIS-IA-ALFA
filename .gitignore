@@ -1,0 +1,31 @@
+# Dependências
+node_modules/
+vendor/
+
+# Logs
+*.log
+logs/
+
+# Variáveis de ambiente
+.env
+.env.local
+.env.*.local
+
+# Arquivos do sistema
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Docker
+.dockerignore
+
+# Build
+dist/
+build/
+*.build
+
