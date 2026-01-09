@@ -1,29 +1,29 @@
-# Dependências
-node_modules/
-vendor/
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+.venv
 
-# Logs
-*.log
-logs/
-
-# Variáveis de ambiente
-#
-
-# Arquivos do sistema
-.DS_Store
-Thumbs.db
+# Environment variables
+.env
+.env.local
 
 # IDE
 .vscode/
 .idea/
 *.swp
 *.swo
+*~
 
-# Docker
-.dockerignore
+# OS
+.DS_Store
+Thumbs.db
 
-# Build
-dist/
-build/
-*.build
+# Logs
+*.log
 
