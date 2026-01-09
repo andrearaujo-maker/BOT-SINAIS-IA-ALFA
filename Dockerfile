@@ -21,4 +21,3 @@ ENV TZ=America/Sao_Paulo
 
 # Comando para executar o bot
 CMD ["python", "main.py"]
-
