@@ -1,40 +1,24 @@
-# Dockerfile para Bots Python do Telegram
 FROM python:3.11-slim
 
-# Configura timezone para São Paulo
-ENV TZ=America/Sao_Paulo
-RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
-
-# Instala dependências do sistema
-RUN apt-get update && apt-get install -y \
-    tzdata \
-    curl \
-    && rm -rf /var/lib/apt/lists/*
-
-# Define diretório de trabalho
 WORKDIR /app
 
-# Copia arquivo de dependências primeiro (otimização de cache)
+# Instalar dependências do sistema e timezone
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    tzdata \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copiar requirements e instalar dependências Python
 COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
 
-# Instala dependências Python
-RUN pip install --no-cache-dir --upgrade pip && \
-    pip install --no-cache-dir -r requirements.txt
+# Copiar código da aplicação
+COPY main.py .
 
-# Copia o resto do código (incluindo .env se existir)
-COPY . .
+# Variáveis de ambiente (serão sobrescritas pelo Dokploy)
+ENV TELEGRAM_TOKEN=""
+ENV TELEGRAM_CHAT_ID=""
+ENV TZ=America/Sao_Paulo
 
-# Cria arquivo .env vazio se não foi copiado (evita erro do Dokploy)
-RUN if [ ! -f /app/.env ]; then \
-        echo "# Arquivo .env vazio - configurações estão no main.py" > /app/.env && \
-        echo "# Este arquivo existe apenas para evitar erro do Dokploy" >> /app/.env; \
-    fi
-
-# Cria diretório para logs (se necessário)
-RUN mkdir -p /app/logs
-
-# Expõe porta (se necessário para webhooks)
-EXPOSE 8000
-
-# Comando para iniciar o bot
+# Comando para executar o bot
 CMD ["python", "main.py"]
+
