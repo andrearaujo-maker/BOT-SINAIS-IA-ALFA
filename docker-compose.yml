@@ -12,6 +12,8 @@ services:
       - TZ=America/Sao_Paulo
       # Python unbuffered para logs em tempo real
       - PYTHONUNBUFFERED=1
+    # Não usa env_file para evitar que Dokploy tente criar .env automaticamente
+    # Todas as variáveis estão definidas acima ou no main.py
     volumes:
       # Persistência de logs
       - bot_logs:/app/logs
