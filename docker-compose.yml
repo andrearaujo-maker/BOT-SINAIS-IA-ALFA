@@ -5,17 +5,12 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: ${APP_NAME:-telegram-bot}
+    container_name: telegram-bot-blaze
     restart: unless-stopped
     environment:
       # Timezone
       - TZ=America/Sao_Paulo
-      # Telegram Bot Token
-      - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
-      # Chat ID para envio de sinais (opcional)
-      - TELEGRAM_CHAT_ID=${TELEGRAM_CHAT_ID:-}
-      # Configurações adicionais
-      - LOG_LEVEL=${LOG_LEVEL:-INFO}
+      # Python unbuffered para logs em tempo real
       - PYTHONUNBUFFERED=1
     volumes:
       # Persistência de logs
